@@ -1,0 +1,16 @@
+<resources>
+
+    <color name="black_overlay">#66000000</color>
+
+    <color name="primary">#009688</color>
+    <!--color name="primary">#00BCD4</color-->
+
+    <color name="background">#727272</color>
+
+    <color name="right">#4CAF50</color>
+
+    <color name="wrong">#D32F2F</color>
+
+    <color name="white">#fff</color>
+
+</resources>
