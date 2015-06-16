@@ -4,6 +4,7 @@ import android.animation.ObjectAnimator;
 import android.app.Activity;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.Drawable;
 import android.graphics.drawable.TransitionDrawable;
 import android.os.AsyncTask;
 import android.os.Handler;
@@ -14,6 +15,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
@@ -41,6 +43,7 @@ public class GameActivity extends Activity {
 
     final ColorDrawable wrongAnswerColor = new ColorDrawable(R.color.wrong);
 
+
     TransitionDrawable transitionCorrect;
     TransitionDrawable transitionWrong;
 
@@ -48,7 +51,11 @@ public class GameActivity extends Activity {
 
     int currentIndex = -1 ;
 
+    int correctAnswers = 0;
+
     private final static int _ONE_SECOND_IN_MILISECONDS = 1*1000;
+
+    private Drawable roundedDrawable;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,6 +64,8 @@ public class GameActivity extends Activity {
         runTaskParseItems();
         transitionCorrect = new TransitionDrawable(new ColorDrawable[]{transparent,correctAnswerColor});
         transitionWrong = new TransitionDrawable(new ColorDrawable[]{transparent,wrongAnswerColor});
+
+        roundedDrawable = getResources().getDrawable(R.drawable.rounded_corner);
 
     }
 
@@ -169,7 +178,7 @@ public class GameActivity extends Activity {
 
     }
 
-   public void onClickAnswer(final View view){
+    public void onClickAnswer(final View view){
 
 
        int indexSelectedAnswer = getIndexSelected(view);
@@ -182,7 +191,7 @@ public class GameActivity extends Activity {
                removeTransitions(view, getViewIndex(currentQuestion.indexCorrectAnswer));
                showNextQuestion();
            }
-       }, _ONE_SECOND_IN_MILISECONDS*2);
+       }, _ONE_SECOND_IN_MILISECONDS * 2);
        
 
    }
@@ -191,12 +200,18 @@ public class GameActivity extends Activity {
 
 
         int indexSelectedAnswer = getIndexSelected(viewSelected);
-        //transitionCorrect.reverseTransition(_ONE_SECOND_IN_MILISECONDS);
-        viewSelected.setBackground(getDrawable(R.drawable.rounded_corner));
+
+
+        viewSelected.setBackgroundResource(R.drawable.rounded_corner);
+
+        if(correct!=null){
+
+            correct.setBackgroundResource(R.drawable.rounded_corner);
+        }
+
         if(indexSelectedAnswer != currentQuestion.indexCorrectAnswer) {
 
-            correct.setBackground(getDrawable(R.drawable.rounded_corner));
-            //transitionWrong.reverseTransition(_ONE_SECOND_IN_MILISECONDS);
+            viewSelected.setBackgroundResource(R.drawable.rounded_corner);
 
         }
 
@@ -211,6 +226,8 @@ public class GameActivity extends Activity {
         if(currentIndex == mapItems.size())
         {
             finish();
+            String result = "You have "+ correctAnswers + " answers";
+            Toast.makeText(this,result,Toast.LENGTH_SHORT).show();
             return;
         }
 
@@ -302,20 +319,18 @@ public class GameActivity extends Activity {
 
         if(indexSelectedAnswer == currentQuestion.indexCorrectAnswer){
 
-            selectedView.setBackgroundDrawable(getDrawable(R.color.right));
-
-            //transitionCorrect.startTransition(_ONE_SECOND_IN_MILISECONDS);
+            //selectedView.setBackgroundDrawable(correctAnswerColor);
+            //selectedView.setBackground(correctAnswerColor);
+            selectedView.setBackgroundResource(R.color.right);
+            correctAnswers++;
         }
 
         else {
-            //selectedView.setBackgroundDrawable(transitionWrong);
 
-            //transitionWrong.startTransition(_ONE_SECOND_IN_MILISECONDS);
+            //selectedView.setBackgroundDrawable( wrongAnswerColor );
+            selectedView.setBackgroundResource(R.color.wrong);
+            getViewIndex(currentQuestion.indexCorrectAnswer).setBackgroundResource(R.color.right);
 
-            selectedView.setBackgroundDrawable(getDrawable(R.color.wrong));
-            getViewIndex(currentQuestion.indexCorrectAnswer).setBackgroundDrawable(getDrawable(R.color.right));
-
-            //transitionWrong.startTransition(_ONE_SECOND_IN_MILISECONDS);
 
         }
 

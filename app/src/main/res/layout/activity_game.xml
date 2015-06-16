@@ -44,6 +44,8 @@
                 android:textColor="@color/white"
                 android:background="@drawable/rounded_corner"
                 android:onClick="onClickAnswer"
+                android:clickable="true"
+                android:padding="5dp"
                 />
 
         <TextView
@@ -57,6 +59,8 @@
                 android:textColor="@color/white"
                 android:background="@drawable/rounded_corner"
                 android:onClick="onClickAnswer"
+                android:clickable="true"
+                android:padding="5dp"
                 />
 
     </LinearLayout>
@@ -81,6 +85,8 @@
                 android:textColor="@color/white"
                 android:background="@drawable/rounded_corner"
                 android:onClick="onClickAnswer"
+                android:clickable="true"
+                android:padding="5dp"
                 />
 
         <TextView
@@ -94,6 +100,8 @@
                 android:textColor="@color/white"
                 android:background="@drawable/rounded_corner"
                 android:onClick="onClickAnswer"
+                android:clickable="true"
+                android:padding="5dp"
                 />
 
 
